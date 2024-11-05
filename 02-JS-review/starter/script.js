@@ -240,3 +240,52 @@ arr1 = [1, 5, 2, 3, 0, -1];
 arr2 = arr1.slice().sort((a, b) => a - b);
 arr1;
 arr2;
+
+//1. Add book object to books
+
+books;
+const newBook = {
+  id: 6,
+  title: "Harry Potter",
+  author: "JK Rowling",
+};
+
+const booksAfterAdd = [...books, newBook];
+booksAfterAdd;
+
+const addInFront = [newBook, ...books];
+addInFront;
+
+//2. Delete a book from books
+
+const booksAfterDelete = books.filter((book) => book.id != 6);
+booksAfterDelete;
+
+//3. Update a book element
+const afterUpdate = books.map((book) =>
+  book.id === 1 ? { ...book, pages: 1 } : book
+);
+afterUpdate;
+
+
+
+// Promises
+
+fetch('https://jsonplaceholder.typicode.com/todos/2')
+      .then(response => response.json())
+      .then(json => console.log(json));
+      
+console.log("After API call");
+
+
+// Async/Await
+
+console.log("Before Await API call");
+async function callRestAPI() {
+  await fetch('https://jsonplaceholder.typicode.com/todos/1')
+  .then(response => response.json())
+  .then(json => console.log(json));
+  
+}
+callRestAPI();
+console.log("After Await API call");
