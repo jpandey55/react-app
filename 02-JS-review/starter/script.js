@@ -142,3 +142,42 @@ function getBooks() {
 function getBook(id) {
   return data.find((d) => d.id === id);
 }
+
+
+//Destructure
+
+const book = getBook(1);
+// const title = book.title;
+// const author = book.author;
+// console.log(title, author);
+
+const {title, author, pages, translations, genres } = book;
+console.log(title, author, translations.chinese, pages);
+
+//Rest
+const[primaryGenre, secondaryGenre, ...otherGenre] = genres; 
+console.log(primaryGenre, secondaryGenre, otherGenre);
+
+const newGenre = [...genres, 'classical']
+newGenre;
+
+//Spread
+const updateBook = {
+  ...book, 
+  //Adding a new property
+  moviePublicationDate: "2001-12-19", 
+  //Overriding an existing property
+  pages: 1210
+}
+updateBook
+
+
+
+//template literal
+
+const summary = `${2+7}. ${title} is a book, has ${pages}`;
+summary;
+
+
+const pagesRange = pages > 1000 ? 'more than thousand' : 'less than thousand'
+pagesRange
