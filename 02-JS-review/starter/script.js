@@ -143,7 +143,6 @@ function getBook(id) {
   return data.find((d) => d.id === id);
 }
 
-
 //Destructure
 
 const book = getBook(1);
@@ -151,33 +150,93 @@ const book = getBook(1);
 // const author = book.author;
 // console.log(title, author);
 
-const {title, author, pages, translations, genres } = book;
+const { title, author, pages, translations, genres } = book;
 console.log(title, author, translations.chinese, pages);
 
 //Rest
-const[primaryGenre, secondaryGenre, ...otherGenre] = genres; 
+const [primaryGenre, secondaryGenre, ...otherGenre] = genres;
 console.log(primaryGenre, secondaryGenre, otherGenre);
 
-const newGenre = [...genres, 'classical']
+const newGenre = [...genres, "classical"];
 newGenre;
 
 //Spread
 const updateBook = {
-  ...book, 
+  ...book,
   //Adding a new property
-  moviePublicationDate: "2001-12-19", 
+  moviePublicationDate: "2001-12-19",
   //Overriding an existing property
-  pages: 1210
-}
-updateBook
-
-
+  pages: 1210,
+};
+updateBook;
 
 //template literal
 
-const summary = `${2+7}. ${title} is a book, has ${pages}`;
+const summary = `${2 + 7}. ${title} is a book, has ${pages}`;
 summary;
 
+const pagesRange = pages > 1000 ? "more than thousand" : "less than thousand";
+pagesRange;
 
-const pagesRange = pages > 1000 ? 'more than thousand' : 'less than thousand'
-pagesRange
+//Arrow function
+str = "2023-10-12";
+
+function getYear(str) {
+  return str.split("-")[0];
+}
+
+const getYearLambda = (str) => str.split("-")[0];
+
+console.log(getYear(str));
+console.log(getYearLambda(str));
+
+//falsy: 0, '', undefined, null
+
+console.log("jonas" && "some string");
+console.log("" && "some string");
+
+//Optional chaining
+const newbook = getBook(3);
+console.log(getTotalCount(newbook));
+function getTotalCount(book) {
+  const goodreads = book.reviews.goodreads?.reviewsCount ?? 0;
+  const librarything = book.reviews.librarything?.reviewsCount ?? 0;
+  return goodreads + librarything;
+}
+
+//Array
+
+const books = getBooks();
+
+const x = [1, 2, 3, 5].map((e) => e * 2);
+x;
+
+const titles = books.map((e) => e.title);
+titles;
+
+const essentialFiels = books.map((book) => ({
+  title: book.title,
+  author: book.author,
+}));
+
+essentialFiels;
+
+const movieAdaption = books.filter((e) => e.hasMovieAdaptation);
+movieAdaption;
+
+const totalPages = books.reduce(
+  (accumulator, book) => accumulator + book.pages,
+  0
+);
+totalPages;
+
+//Sort : mutates the original array
+let arr1 = [1, 5, 2, 3, 0, -1];
+let arr2 = arr1.sort((a, b) => a - b);
+arr1;
+arr2;
+
+arr1 = [1, 5, 2, 3, 0, -1];
+arr2 = arr1.slice().sort((a, b) => a - b);
+arr1;
+arr2;
