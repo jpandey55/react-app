@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 
-import './index.css';
+import "./index.css";
 
 const pizzaData = [
   {
@@ -45,7 +45,7 @@ const pizzaData = [
     price: 18,
     photoName: "pizzas/prosciutto.jpg",
     soldOut: false,
-  },
+  }
 ];
 
 function App() {
@@ -54,6 +54,7 @@ function App() {
       <Header />
       <Menu />
       <Footer />
+      <button className="btn">Order Now</button>
     </div>
   );
 }
@@ -61,61 +62,65 @@ function App() {
 function Header() {
   return (
     <header className="header">
-      <h1>
-        Fast React Pizza Co.
-      </h1>
+      <h1>Fast React Pizza Co.</h1>
     </header>
-    );
+  );
 }
 
 function Menu() {
   return (
     <div className="menu">
       <h2>Our Menu</h2>
-      <PizzaList pizzaData={pizzaData}/>
+      <p>Below are our pizzas</p>
+      {pizzaData.length > 0 ? <PizzaList pizzas={pizzaData}/> : (<p> We are working on our Menu</p>)  }
     </div>
   );
 }
 
-function PizzaList(props) {
-  const pizzas = props.pizzaData;
-  const pizza = pizzas.map((p) => 
+function PizzaList({pizzas}) {
+  console.log("Inside PizzaList")
+  // const pizzas = props.pizzaData;
+  const pizza = pizzas.map((p) => (
     <Pizza
-      name = {p.name}
-      price = {p.price}
-      ingredients = {p.ingredients}
-      photoName = {p.photoName}
+      key={p.name}
+      name={p.name}
+      price={p.price}
+      ingredients={p.ingredients}
+      photoName={p.photoName}
+      soldOut={p.soldOut}
     />
-  );
-  return (
-    <div>{pizza}</div>
-  );
+  ));
+  return <div className="pizzas">{pizza}</div>;
 }
 
 function Pizza(props) {
   console.log(props.pizzaData);
   return (
-    <div className="pizza">
+    <div className= {`pizza ${props.soldOut ? "sold-out" : ""}`}>
       <img src={props.photoName} alt={props.name} />
       <div>
-        <h3>{props.name}</h3>
+        <h3 className="h3">{props.name}</h3>
         <p>{props.ingredients}</p>
-        <span>{props.price}</span>
+        {props.soldOut ? (<span> SOLD OUT</span>) : (<span>{props.price}</span>) }
       </div>
     </div>
   );
 }
 
-
 function Footer() {
   const hour = new Date().getHours();
   const openHour = 12;
   const closeHour = 22;
+  const isOpen = hour >= openHour && hour < closeHour;
 
   return (
     <footer className="footer">
-      <div>
-        <p> {new Date().toLocaleTimeString()} | {hour >= openHour && hour < closeHour ?  "We're currently open" : "Sorry, we are closed"} </p>
+      <div className="order">
+        <p>
+          {new Date().toLocaleTimeString()} |{" "}
+          {isOpen && <h> We're open until {closeHour}:00 </h>}{" "}
+          {!isOpen && <h> We're closed, we will open at {openHour}:00 </h>}
+        </p>
       </div>
     </footer>
   );
